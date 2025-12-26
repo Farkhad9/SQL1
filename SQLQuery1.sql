@@ -1,0 +1,27 @@
+CREATE DATABASE UniversityDB;
+USE UniversityDB;
+CREATE TABLE Faculties
+(
+    Id INT IDENTITY PRIMARY KEY,
+    Name NVARCHAR(100) NOT NULL UNIQUE
+);
+CREATE TABLE Groups
+(
+    Id INT IDENTITY PRIMARY KEY,
+    Name NVARCHAR(50) NOT NULL UNIQUE,
+    FacultyId INT NOT NULL,
+
+    CONSTRAINT FK_Groups_Faculties
+        FOREIGN KEY (FacultyId) REFERENCES Faculties(Id)
+);
+CREATE TABLE Students
+(
+    Id INT IDENTITY PRIMARY KEY,
+    FullName NVARCHAR(100) NOT NULL,
+    Age INT CHECK (Age >= 16),
+    Email NVARCHAR(100) UNIQUE NOT NULL,
+    GroupId INT NOT NULL,
+
+    CONSTRAINT FK_Students_Groups
+        FOREIGN KEY (GroupId) REFERENCES Groups(Id)
+);
